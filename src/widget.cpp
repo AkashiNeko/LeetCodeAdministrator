@@ -19,6 +19,13 @@ Widget::~Widget() {
 }
 
 void Widget::init() {
+    ui->cboDiff->setStyleSheet("color:rgb" + DiffColor::EASY + ";");
+    ui->ledMdEasy->setStyleSheet("QLineEdit{color:rgb" + DiffColor::EASY + "; height: 12px;}");
+    ui->ledMdMedium->setStyleSheet("QLineEdit{color:rgb" + DiffColor::MEDIUM + "; height: 12px;}");
+    ui->ledMdHard->setStyleSheet("QLineEdit{color:rgb" + DiffColor::HARD + "; height: 12px;}");
+    ui->ledMdTotal->setStyleSheet("QLineEdit{color:rgb" + DiffColor::TOTAL + "; height: 12px;}");
+    ui->ledInputName->setStyleSheet("QLineEdit{color:red; height: 12px;}");
+    ui->ledInputLink->setStyleSheet("QLineEdit{color:blue; height: 12px;}");
     if(!md->read()) {
         QMessageBox::critical(this, "错误",
             "当前目录：" + path + \
@@ -137,10 +144,13 @@ void Widget::on_ledInputLink_textChanged(const QString &text) {
                 break;
             ++i;
         }
+        if (text[i] == '/' && i + 1 < text.size()) {
+            ui->ledInputLink->setText(text.left(i + 1));
+        }
         ui->ledInfoEnName->setText(text.mid(start, i - start));
     }
     else {
-        ui->ledInfoEnName->setText("");
+        ui->ledInfoEnName->clear();
     }
 }
 
@@ -196,5 +206,28 @@ void Widget::on_btnSave_clicked() {
         QMessageBox::critical(this, "错误", "写入文件 README.md 失败");
     else
         QMessageBox::about(this, "提示", "保存成功");
+}
+
+
+void Widget::on_cboDiff_currentIndexChanged(int index) {
+    switch (index) {
+    case Difficulty::Easy:
+        ui->cboDiff->setStyleSheet("color:rgb(0,170,0);");
+
+        break;
+    case Difficulty::Medium:
+        ui->cboDiff->setStyleSheet("color:rgb(220,140,0);");
+
+        break;
+    case Difficulty::Hard:
+        ui->cboDiff->setStyleSheet("color:rgb(220,0,0);");
+
+        break;
+    default:
+        break;
+    }
+
+
+
 }
 

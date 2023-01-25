@@ -237,17 +237,17 @@
         </property>
         <item>
          <property name="text">
-          <string>简单</string>
+          <string>简单 - Easy</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>中等</string>
+          <string>中等 - Medium</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>困难</string>
+          <string>困难 - Hard</string>
          </property>
         </item>
        </widget>
@@ -304,6 +304,9 @@
       </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="ledInfoNum">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -347,6 +350,9 @@
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="ledInfoZhName">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -390,6 +396,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QLineEdit" name="ledInfoEnName">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -433,6 +442,9 @@
       </item>
       <item row="3" column="1">
        <widget class="QLineEdit" name="ledInfoDate">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -664,6 +676,9 @@
             <width>100</width>
             <height>30</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
