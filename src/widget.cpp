@@ -191,10 +191,6 @@ void Widget::on_btnAdd_clicked() {
         QMessageBox::critical(this, "错误", "写入代码文件失败");
         return;
     }
-    if (!md->save()) {
-        QMessageBox::critical(this, "错误", "写入文件 README.md 失败");
-        return;
-    }
     switch (ui->cboDiff->currentIndex()) {
     case Easy:
         ++md->easy;
@@ -216,6 +212,10 @@ void Widget::on_btnAdd_clicked() {
         date + "." + QString::number(QDate::currentDate().day()) + "|";
     md->add(markdown.toStdString());
     this->showMD();
+    if (!md->save()) {
+        QMessageBox::critical(this, "错误", "写入文件 README.md 失败");
+        return;
+    }
     QMessageBox::about(this, "提示", "添加成功");
     on_btnClean_clicked();
 }
