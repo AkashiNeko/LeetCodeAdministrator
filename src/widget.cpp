@@ -32,7 +32,7 @@ void Widget::init() {
             "\n\n这不是Akashi的LeetCode工作目录！" \
             "\n\n请将该程序移动至包含 README.md 的相同目录下！"
         );
-        exit(0);
+        exit(1);
     }
     setNumbers();
 
@@ -54,9 +54,18 @@ void Widget::init() {
 
 void Widget::showMD() {
     QString tedMdText;
-    int sz = md->size() >= 10 ? 10 : md->size();
+    int sz = md->size() >= 20 ? 20 : md->size();
     for (int i = 0; i < sz; ++i) {
-        tedMdText += QString().fromStdString(md->at(i));
+        QString line = QString().fromStdString(md->at(i));
+        bool cp = true;
+        for (auto ch : line) {
+            if (ch == '(')
+                cp = false;
+            else if (cp)
+                tedMdText += ch;
+            else if (ch == ')')
+                cp = true;
+        }
         tedMdText += '\n';
     }
     ui->tedMd->setText(tedMdText);
@@ -169,8 +178,21 @@ void Widget::on_btnTidy_clicked() {
 }
 
 void Widget::on_btnAdd_clicked() {
+    assert(!md->empty());
     if (ui->ledInfoNum->text().isEmpty() || ui->ledInfoZhName->text().isEmpty() || ui->ledInfoEnName->text().isEmpty()) {
         QMessageBox::critical(this, "错误", "题目信息未填写完整");
+        return;
+    }
+    if (ui->tedCode->toPlainText().isEmpty()) {
+        QMessageBox::critical(this, "错误", "请输入代码");
+        return;
+    }
+    if (!writeCode()) {
+        QMessageBox::critical(this, "错误", "写入代码文件失败");
+        return;
+    }
+    if (!md->save()) {
+        QMessageBox::critical(this, "错误", "写入文件 README.md 失败");
         return;
     }
     switch (ui->cboDiff->currentIndex()) {
@@ -194,40 +216,29 @@ void Widget::on_btnAdd_clicked() {
         date + "." + QString::number(QDate::currentDate().day()) + "|";
     md->add(markdown.toStdString());
     this->showMD();
+    QMessageBox::about(this, "提示", "添加成功");
+    on_btnClean_clicked();
 }
 
-void Widget::on_btnSave_clicked() {
-    assert(!md->empty());
-    if (ui->tedCode->toPlainText().isEmpty())
-        QMessageBox::critical(this, "错误", "请输入代码");
-    else if (!writeCode())
-        QMessageBox::critical(this, "错误", "写入代码文件失败");
-    else if (!md->save())
-        QMessageBox::critical(this, "错误", "写入文件 README.md 失败");
-    else
-        QMessageBox::about(this, "提示", "保存成功");
+void Widget::on_btnClean_clicked() {
+    ui->ledInputLink->clear();
+    ui->ledInputName->clear();
+    ui->tedCode->clear();
 }
-
 
 void Widget::on_cboDiff_currentIndexChanged(int index) {
     switch (index) {
     case Difficulty::Easy:
         ui->cboDiff->setStyleSheet("color:rgb(0,170,0);");
-
         break;
     case Difficulty::Medium:
         ui->cboDiff->setStyleSheet("color:rgb(220,140,0);");
-
         break;
     case Difficulty::Hard:
         ui->cboDiff->setStyleSheet("color:rgb(220,0,0);");
-
         break;
     default:
         break;
     }
-
-
-
 }
 

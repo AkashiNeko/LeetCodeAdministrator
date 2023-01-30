@@ -35,9 +35,8 @@ private slots:
     void on_btnOpenFolder_clicked();
     void on_btnTidy_clicked();
     void on_btnAdd_clicked();
-    void on_btnSave_clicked();
+    void on_btnClean_clicked();
     void on_cboDiff_currentIndexChanged(int index);
-
 private:
     QString path;
     QString date;
