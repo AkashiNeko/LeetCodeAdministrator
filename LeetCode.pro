@@ -20,9 +20,9 @@ HEADERS += \
 FORMS += \
     widget.ui
 
-VERSION = 1.0.2
+VERSION = 1.0.3
 
-QMAKE_TARGET_COMPANY = "qwq"
+QMAKE_TARGET_COMPANY = "AkashiNeko"
 
 QMAKE_TARGET_PRODUCT = "LeetCode Administrator"
 

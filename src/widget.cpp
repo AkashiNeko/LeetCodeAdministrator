@@ -120,28 +120,17 @@ void Widget::on_ledInputName_textChanged(const QString &text)
     if (text.isEmpty()) {
         ui->ledInfoNum->setText("");
         ui->ledInfoZhName->setText("");
+        return;
     }
-    else if (text[0].isDigit()) {
-        int i = 0;
-        while (i < text.size()) {
-            if (!text[i].isDigit()) {
-                ui->ledInfoNum->setText(text.left(i));
-                break;
-            }
-            ++i;
-        }
-        while (i < text.size()) {
-            if (text[i] != '.' && text[i] != ' ') {
-                ui->ledInfoZhName->setText(text.mid(i));
-                break;
-            }
-            ++i;
+    for (int i = 0; i < text.size() - 1; ++i) {
+        if (text[i] == '.' && text[i + 1] == ' ') {
+            ui->ledInfoNum->setText(text.left(i));
+            ui->ledInfoZhName->setText(text.mid(i + 2));
+            return;
         }
     }
-    else {
-        ui->ledInfoNum->setText("?");
-        ui->ledInfoZhName->setText(text);
-    }
+    ui->ledInfoNum->setText("?");
+    ui->ledInfoZhName->setText(text);
 }
 
 void Widget::on_ledInputLink_textChanged(const QString &text) {
